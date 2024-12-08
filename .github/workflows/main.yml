@@ -1,0 +1,33 @@
+# .github/workflows/ci.yml
+
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Set the branch to run this on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Checkout the repository
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'  # Specify the Python version
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip  # Upgrade pip to the latest version
+          pip install telebot flask aiogram pyTelegramBotAPI  # Install required packages
+
+      - name: Set execute permissions
+        run: chmod +x hr.py  # Give execute permission to your bot script
+        # Optionally allow execution for all files
+        run: chmod +x *
+
+      - name: Run bot
+        run: python hr.py  # Run your bot
